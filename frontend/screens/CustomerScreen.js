@@ -10,6 +10,7 @@ import {
 } from "../functions/ticketReducer";
 import ticketFormValidator from "../functions/ticketFormValidator";
 import handleImageUpload from "../functions/handleImageUpload";
+import createTicket from "../api/createTicket";
 
 export default function CustomerScreen() {
   const [state, dispatch] = useReducer(updateTicketState, initialTicketState);
@@ -21,6 +22,7 @@ export default function CustomerScreen() {
   const handleSubmit = async () => {
     const missingValues = ticketFormValidator(state);
     if (missingValues.length === 0) {
+      await createTicket(state);
     } else {
       const missingValuesString = missingValues.join(", ");
       Alert.alert("Missing Required Fields", `${missingValuesString}`);
