@@ -94,7 +94,7 @@ export default function CustomerScreen() {
           value={state["description"]}
           multiline={true}
         />
-        <View style={{ marginVertical: 20 }}>
+        <View style={{ marginVertical: 20, paddingBottom: 20 }}>
           <ActionButton
             title={"Submit"}
             onPress={handleSubmit}

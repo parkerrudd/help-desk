@@ -11,7 +11,6 @@ import Modal from "react-native-modal";
 import SelectDropdown from "react-native-select-dropdown";
 
 import ActionButton from "./ActionButton";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default function TicketModal({
   modalVisible,
@@ -108,7 +107,7 @@ const styles = StyleSheet.create({
   modalView: {
     display: "flex",
     padding: 20,
-    gap: 20,
+    gap: 15,
     backgroundColor: "#FAF9F6",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
