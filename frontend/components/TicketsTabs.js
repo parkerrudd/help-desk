@@ -24,7 +24,7 @@ export default function TicketsTabs({ tickets, refetchTickets }) {
   };
 
   const handleSubmitResponse = async (ticketId) => {
-    console.log("Ticket Response:", ticketResponse);
+    console.log("Would normally send email here with body:", ticketResponse);
     if (updatedTicketStatus.length) {
       await updateTicketStatus(
         ticketId,
