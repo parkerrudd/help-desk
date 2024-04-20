@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "frontend",
+    "name": "Help Desk",
     "slug": "frontend",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -27,6 +27,17 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "0a2c67dc-a420-46ba-bcf7-ac7b0c1944bc"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/0a2c67dc-a420-46ba-bcf7-ac7b0c1944bc"
     }
   }
 }
