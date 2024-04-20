@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList, View } from "react-native";
+import { FlatList, View, Text } from "react-native";
 import Toast from "react-native-toast-message";
 
 import TicketRenderItem from "./TicketRenderItem";
@@ -32,6 +32,14 @@ export default function TicketsTabs({ tickets, refetchTickets }) {
       type: "success",
     });
   };
+
+  if (!tickets?.length) {
+    return (
+      <Text style={{ textAlign: "center", marginTop: 5 }}>
+        No tickets yet...
+      </Text>
+    );
+  }
 
   return (
     <View style={{ flex: 1 }}>

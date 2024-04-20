@@ -9,7 +9,7 @@ export const updateTicketStatus = async (
   try {
     setUpdatingTicket(true);
     const res = await axios.patch(
-      `http://192.168.86.29:3000/tickets/${ticketId}`,
+      `https://help-desk-akxg.onrender.com/tickets/${ticketId}`,
       { status: status }
     );
   } catch (err) {
