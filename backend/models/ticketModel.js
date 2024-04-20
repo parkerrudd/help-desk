@@ -8,6 +8,7 @@ const ticketSchema = new mongoose.Schema(
     imageUri: String,
     imageBase64: String,
     description: String,
+    status: { type: String, default: "New" },
   },
   { timestamps: true }
 );

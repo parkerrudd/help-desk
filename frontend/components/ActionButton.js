@@ -1,10 +1,23 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity, Text, View } from "react-native";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  Text,
+  ActivityIndicator,
+} from "react-native";
 
-export default function ActionButton({ title, onPress }) {
+export default function ActionButton({ title, onPress, disabled }) {
   return (
-    <TouchableOpacity style={styles.btnContainer} onPress={onPress}>
-      <Text style={styles.btnText}>{title}</Text>
+    <TouchableOpacity
+      style={[styles.btnContainer, disabled && { opacity: 0.7 }]}
+      onPress={onPress}
+      disabled={disabled}
+    >
+      {disabled ? (
+        <ActivityIndicator />
+      ) : (
+        <Text style={styles.btnText}>{title}</Text>
+      )}
     </TouchableOpacity>
   );
 }

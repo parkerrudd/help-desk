@@ -20,7 +20,6 @@ mongoose
   .catch((error) => console.error(error));
 
 app.post("/tickets", async (req, res) => {
-  console.log("req", req);
   const ticket = new Ticket(req.body);
   try {
     await ticket.save();
@@ -32,9 +31,27 @@ app.post("/tickets", async (req, res) => {
 
 app.get("/tickets", async (req, res) => {
   try {
-    const tickets = await Ticket.find();
+    const tickets = await Ticket.find().sort({ createdAt: -1 });
     res.status(200).send(tickets);
   } catch (error) {
     res.status(500).send(error);
+  }
+});
+
+app.patch("/tickets/:ticket_id", async (req, res) => {
+  const { ticket_id } = req.params;
+  const { status } = req.body;
+  try {
+    const ticket = await Ticket.findByIdAndUpdate(
+      ticket_id,
+      { status },
+      { new: true }
+    );
+    if (!ticket) {
+      return res.status(404).send({ error: "Ticket not found" });
+    }
+    res.status(200).send(ticket);
+  } catch (error) {
+    res.status(400).send(error);
   }
 });

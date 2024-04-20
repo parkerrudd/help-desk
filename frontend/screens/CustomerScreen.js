@@ -1,4 +1,4 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import { Text, StyleSheet, View, TextInput, Alert } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
@@ -14,6 +14,7 @@ import createTicket from "../api/createTicket";
 
 export default function CustomerScreen() {
   const [state, dispatch] = useReducer(updateTicketState, initialTicketState);
+  const [submittingTicket, setSubmittingTicket] = useState(false);
 
   const handleStateChange = (inputField, inputValue) => {
     dispatch({ type: "UPDATE_FIELD", field: inputField, value: inputValue });
@@ -22,7 +23,7 @@ export default function CustomerScreen() {
   const handleSubmit = async () => {
     const missingValues = ticketFormValidator(state);
     if (missingValues.length === 0) {
-      await createTicket(state);
+      await createTicket(state, setSubmittingTicket);
     } else {
       const missingValuesString = missingValues.join(", ");
       Alert.alert("Missing Required Fields", `${missingValuesString}`);
@@ -77,7 +78,11 @@ export default function CustomerScreen() {
           />
         </View>
         <View style={{ marginVertical: 20 }}>
-          <ActionButton title={"Submit"} onPress={handleSubmit} />
+          <ActionButton
+            title={"Submit"}
+            onPress={handleSubmit}
+            disabled={submittingTicket}
+          />
         </View>
       </KeyboardAwareScrollView>
     </View>
