@@ -25,7 +25,7 @@ export default function AdminScreen() {
   });
 
   if (isLoading) {
-    return <ActivityIndicator />;
+    return <ActivityIndicator style={{ flex: 1 }} size={"large"} />;
   }
 
   return (

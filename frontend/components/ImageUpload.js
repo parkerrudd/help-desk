@@ -39,7 +39,7 @@ export default function ImageUpload({ imageUri, onPress, dispatch }) {
 
 const styles = StyleSheet.create({
   imageUploadContainer: {
-    height: 150,
+    height: 130,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,

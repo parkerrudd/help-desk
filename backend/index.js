@@ -21,7 +21,6 @@ mongoose
 
 app.post("/tickets", async (req, res) => {
   const ticket = new Ticket(req.body);
-  console.log("req.body", req.body);
   try {
     await ticket.save();
     res.status(201).send(ticket);

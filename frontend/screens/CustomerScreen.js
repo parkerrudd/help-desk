@@ -8,6 +8,7 @@ import {
   Platform,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import Toast from "react-native-toast-message";
 
 import ImageUpload from "../components/ImageUpload";
 import ActionButton from "../components/ActionButton";
@@ -31,6 +32,9 @@ export default function CustomerScreen() {
     const missingValues = ticketFormValidator(state);
     if (missingValues.length === 0) {
       await createTicket(state, setSubmittingTicket);
+      Toast.show({
+        type: "success",
+      });
       dispatch({ type: "RESET_FIELDS" });
     } else {
       const missingValuesString = missingValues.join(", ");
