@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { FlatList, View } from "react-native";
+import Toast from "react-native-toast-message";
 
 import TicketRenderItem from "./TicketRenderItem";
 import { updateTicketStatus } from "../api/updateTicketStatus";
@@ -27,6 +28,9 @@ export default function TicketsTabs({ tickets, refetchTickets }) {
     await updateTicketStatus(ticketId, updatedTicketStatus, setUpdatingTicket);
     refetchTickets();
     setModalVisible(false);
+    Toast.show({
+      type: "success",
+    });
   };
 
   return (
