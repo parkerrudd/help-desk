@@ -4,7 +4,7 @@ const cors = require("cors");
 const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
 const Ticket = require("./models/ticketModel");
 
 mongoose
@@ -21,6 +21,7 @@ mongoose
 
 app.post("/tickets", async (req, res) => {
   const ticket = new Ticket(req.body);
+  console.log("req.body", req.body);
   try {
     await ticket.save();
     res.status(201).send(ticket);

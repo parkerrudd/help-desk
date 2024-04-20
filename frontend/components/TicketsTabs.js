@@ -1,21 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
-  TouchableOpacity,
   FlatList,
   View,
   Image,
   TextInput,
+  Platform,
 } from "react-native";
 import Modal from "react-native-modal";
-import { FlashList } from "@shopify/flash-list";
 import SelectDropdown from "react-native-select-dropdown";
 
 import ActionButton from "./ActionButton";
 import { updateTicketStatus } from "../api/updateTicketStatus";
+import TicketRenderItem from "./TicketRenderItem";
 
-export default function TicketsTabs({ tickets }) {
+export default function TicketsTabs({ tickets, refetchTickets }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalInfo, setModalInfo] = useState(null);
   const [ticketResponse, setTicketResponse] = useState("");
@@ -33,38 +33,18 @@ export default function TicketsTabs({ tickets }) {
 
   const handleSubmitResponse = async (ticketId) => {
     console.log("Ticket Response:", ticketResponse);
-    updateTicketStatus(ticketId, updatedTicketStatus);
-  };
-
-  const renderItem = ({ item }) => {
-    return (
-      <TouchableOpacity
-        style={styles.listItemContainer}
-        onPress={() => handleTicketPress(item)}
-      >
-        <View style={styles.textInfoContainer}>
-          <Text>
-            <Text style={{ fontWeight: "bold" }}>Status:</Text> {item?.status}
-          </Text>
-          <Text numberOfLines={1} ellipsizeMode="tail">
-            <Text style={{ fontWeight: "bold" }}>Description:</Text>{" "}
-            {item?.description}
-          </Text>
-        </View>
-        <Image
-          source={require("../assets/images/plus-solid.png")}
-          style={styles.plusIcon}
-        />
-      </TouchableOpacity>
-    );
+    await updateTicketStatus(ticketId, updatedTicketStatus);
+    refetchTickets();
+    setModalVisible(false);
   };
 
   return (
     <View style={{ flex: 1 }}>
       <FlatList
         data={tickets}
-        renderItem={renderItem}
-        estimatedItemSize={100}
+        renderItem={({ item }) => (
+          <TicketRenderItem item={item} handleTicketPress={handleTicketPress} />
+        )}
       />
       <Modal
         isVisible={modalVisible}
@@ -73,6 +53,7 @@ export default function TicketsTabs({ tickets }) {
         swipeDirection={"down"}
         collapsable={true}
         onSwipeComplete={handleDismissModal}
+        animationIn={"slideInUp"}
       >
         <View style={styles.modalView}>
           <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
@@ -110,12 +91,23 @@ export default function TicketsTabs({ tickets }) {
             <Text style={{ fontWeight: "bold" }}>Ticket Description:</Text>{" "}
             {modalInfo?.description}
           </Text>
+          {modalInfo?.imageBase64 && (
+            <>
+              <Text style={{ fontWeight: "bold" }}>Photo:</Text>
+              <Image
+                style={{ width: 200, height: 200 }}
+                source={{
+                  uri: `data:image/jpeg;base64,${modalInfo?.imageBase64}`,
+                }}
+              />
+            </>
+          )}
           <TextInput
             style={styles.responseInput}
             placeholder="Ticket Response..."
             placeholderTextColor={"gray"}
-            numberOfLines={20}
             onChangeText={(e) => setTicketResponse(e)}
+            multiline={true}
           />
           <ActionButton
             title={"Submit"}
@@ -128,38 +120,18 @@ export default function TicketsTabs({ tickets }) {
 }
 
 const styles = StyleSheet.create({
-  listItemContainer: {
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: 20,
-    borderBottomColor: "lightgray",
-    borderBottomWidth: 1,
-  },
-  textInfoContainer: {
-    width: "90%",
-    gap: 10,
-  },
-  plusIcon: {
-    height: 20,
-    width: 20,
-    tintColor: "#1b5738",
-  },
   bottomModal: {
     justifyContent: "flex-end",
     margin: 0,
   },
   modalView: {
     display: "flex",
-    // justifyContent: "center",
-    // alignItems: "center",
     padding: 20,
     gap: 20,
     backgroundColor: "#FAF9F6",
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    height: "60%",
+    height: "87%",
     borderColor: "rgba(0, 0, 0, 0.1)",
   },
   responseInput: {
@@ -167,7 +139,7 @@ const styles = StyleSheet.create({
     borderColor: "lightgray",
     borderWidth: 1,
     borderRadius: 10,
-    paddingBottom: 200,
+    paddingBottom: 100,
     paddingLeft: 10,
     paddingTop: 10,
   },

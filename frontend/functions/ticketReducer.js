@@ -12,6 +12,7 @@ export const updateTicketState = (state, action) => {
     case "UPDATE_FIELD":
       return { ...state, [action.field]: action.value };
     case "RESET_FIELDS":
+      console.log("action");
       return { ...initialTicketState };
     default:
       return state;

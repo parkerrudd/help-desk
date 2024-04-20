@@ -9,20 +9,20 @@ import TicketsTabNavigator from "../components/TicketsTabNavigator";
 export default function AdminScreen() {
   const isFocused = useIsFocused();
 
-  const { data: tickets, isLoading } = useQuery(
-    "fetchTickets",
-    async () => fetchTickets(),
-    {
-      enabled: isFocused,
-      onError: (err) => {
-        console.error(err);
-        Alert.alert(
-          "Oops",
-          "Tickets could not be retrieved. Please try again later."
-        );
-      },
-    }
-  );
+  const {
+    data: tickets,
+    isLoading,
+    refetch: refetchTickets,
+  } = useQuery("fetchTickets", async () => fetchTickets(), {
+    enabled: isFocused,
+    onError: (err) => {
+      console.error(err);
+      Alert.alert(
+        "Oops",
+        "Tickets could not be retrieved. Please try again later."
+      );
+    },
+  });
 
   if (isLoading) {
     return <ActivityIndicator />;
@@ -32,7 +32,10 @@ export default function AdminScreen() {
     <View style={styles.container}>
       <Text style={styles.headerText}>Tickets</Text>
       <View style={styles.tabNavContainer}>
-        <TicketsTabNavigator tickets={tickets} />
+        <TicketsTabNavigator
+          tickets={tickets}
+          refetchTickets={refetchTickets}
+        />
       </View>
     </View>
   );

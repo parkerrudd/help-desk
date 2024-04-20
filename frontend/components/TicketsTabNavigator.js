@@ -4,7 +4,7 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import TicketsTabs from "./TicketsTabs";
 
 const Tab = createMaterialTopTabNavigator();
-export default function TicketsTabNavigator({ tickets }) {
+export default function TicketsTabNavigator({ tickets, refetchTickets }) {
   const [newTickets, setNewTickets] = useState([]);
   const [inProgressTickets, setInProgressTickets] = useState([]);
   const [resolvedTickets, setResolvedTickets] = useState([]);
@@ -41,16 +41,30 @@ export default function TicketsTabNavigator({ tickets }) {
       }}
     >
       <Tab.Screen name="All">
-        {() => <TicketsTabs tickets={tickets} />}
+        {() => (
+          <TicketsTabs tickets={tickets} refetchTickets={refetchTickets} />
+        )}
       </Tab.Screen>
       <Tab.Screen name="New">
-        {() => <TicketsTabs tickets={newTickets} />}
+        {() => (
+          <TicketsTabs tickets={newTickets} refetchTickets={refetchTickets} />
+        )}
       </Tab.Screen>
       <Tab.Screen name="In Progress">
-        {() => <TicketsTabs tickets={inProgressTickets} />}
+        {() => (
+          <TicketsTabs
+            tickets={inProgressTickets}
+            refetchTickets={refetchTickets}
+          />
+        )}
       </Tab.Screen>
       <Tab.Screen name="Resolved">
-        {() => <TicketsTabs tickets={resolvedTickets} />}
+        {() => (
+          <TicketsTabs
+            tickets={resolvedTickets}
+            refetchTickets={refetchTickets}
+          />
+        )}
       </Tab.Screen>
     </Tab.Navigator>
   );

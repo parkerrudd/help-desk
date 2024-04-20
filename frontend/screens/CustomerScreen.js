@@ -1,5 +1,12 @@
 import React, { useReducer, useState } from "react";
-import { Text, StyleSheet, View, TextInput, Alert } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  View,
+  TextInput,
+  Alert,
+  Platform,
+} from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import ImageUpload from "../components/ImageUpload";
@@ -24,6 +31,7 @@ export default function CustomerScreen() {
     const missingValues = ticketFormValidator(state);
     if (missingValues.length === 0) {
       await createTicket(state, setSubmittingTicket);
+      dispatch({ type: "RESET_FIELDS" });
     } else {
       const missingValuesString = missingValues.join(", ");
       Alert.alert("Missing Required Fields", `${missingValuesString}`);
@@ -41,6 +49,7 @@ export default function CustomerScreen() {
           <TextInput
             placeholder="First Name"
             onChangeText={(e) => handleStateChange("firstName", e)}
+            value={state["firstName"]}
           />
         </View>
         <Text style={styles.labels}>
@@ -50,6 +59,7 @@ export default function CustomerScreen() {
           <TextInput
             placeholder="Last Name"
             onChangeText={(e) => handleStateChange("lastName", e)}
+            value={state["lastName"]}
           />
         </View>
         <Text style={styles.labels}>
@@ -59,6 +69,9 @@ export default function CustomerScreen() {
           <TextInput
             placeholder="Email"
             onChangeText={(e) => handleStateChange("email", e)}
+            keyboardType="email-address"
+            value={state["email"]}
+            autoCapitalize="none"
           />
         </View>
         <Text style={styles.labels}>Image Upload</Text>
@@ -70,13 +83,13 @@ export default function CustomerScreen() {
         <Text style={styles.labels}>
           <Text style={{ color: "red" }}>* </Text>Description
         </Text>
-        <View style={[styles.inputContainer, { height: 150 }]}>
-          <TextInput
-            placeholder="Describe your issue..."
-            numberOfLines={4}
-            onChangeText={(e) => handleStateChange("description", e)}
-          />
-        </View>
+        <TextInput
+          style={styles.descriptionInput}
+          placeholder="Describe your issue..."
+          onChangeText={(e) => handleStateChange("description", e)}
+          value={state["description"]}
+          multiline={true}
+        />
         <View style={{ marginVertical: 20 }}>
           <ActionButton
             title={"Submit"}
@@ -120,5 +133,14 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     backgroundColor: "white",
+  },
+  descriptionInput: {
+    backgroundColor: "#fff",
+    borderColor: "lightgray",
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingBottom: 100,
+    paddingLeft: 10,
+    paddingTop: Platform.OS === "ios" ? 10 : 0,
   },
 });
