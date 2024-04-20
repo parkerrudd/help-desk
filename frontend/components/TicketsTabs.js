@@ -25,7 +25,14 @@ export default function TicketsTabs({ tickets, refetchTickets }) {
 
   const handleSubmitResponse = async (ticketId) => {
     console.log("Ticket Response:", ticketResponse);
-    await updateTicketStatus(ticketId, updatedTicketStatus, setUpdatingTicket);
+    if (updatedTicketStatus.length) {
+      await updateTicketStatus(
+        ticketId,
+        updatedTicketStatus,
+        setUpdatingTicket
+      );
+      setUpdatedTicketStatus("");
+    }
     refetchTickets();
     setModalVisible(false);
     Toast.show({

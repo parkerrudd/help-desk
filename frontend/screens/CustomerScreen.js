@@ -12,6 +12,7 @@ import Toast from "react-native-toast-message";
 
 import ImageUpload from "../components/ImageUpload";
 import ActionButton from "../components/ActionButton";
+import FormInput from "../components/FormInput";
 import {
   initialTicketState,
   updateTicketState,
@@ -46,38 +47,26 @@ export default function CustomerScreen() {
     <View style={styles.container}>
       <Text style={styles.headerText}>Support Ticket</Text>
       <KeyboardAwareScrollView style={styles.formContainer} extraHeight={300}>
-        <Text style={styles.labels}>
-          <Text style={{ color: "red" }}>* </Text>First Name
-        </Text>
-        <View style={styles.inputContainer}>
-          <TextInput
-            placeholder="First Name"
-            onChangeText={(e) => handleStateChange("firstName", e)}
-            value={state["firstName"]}
-          />
-        </View>
-        <Text style={styles.labels}>
-          <Text style={{ color: "red" }}>* </Text>Last Name
-        </Text>
-        <View style={styles.inputContainer}>
-          <TextInput
-            placeholder="Last Name"
-            onChangeText={(e) => handleStateChange("lastName", e)}
-            value={state["lastName"]}
-          />
-        </View>
-        <Text style={styles.labels}>
-          <Text style={{ color: "red" }}>* </Text>Email
-        </Text>
-        <View style={styles.inputContainer}>
-          <TextInput
-            placeholder="Email"
-            onChangeText={(e) => handleStateChange("email", e)}
-            keyboardType="email-address"
-            value={state["email"]}
-            autoCapitalize="none"
-          />
-        </View>
+        <FormInput
+          label="First Name"
+          onChangeText={(e) => handleStateChange("firstName", e)}
+          value={state["firstName"]}
+          placeholder="First Name"
+        />
+        <FormInput
+          label="Last Name"
+          onChangeText={(e) => handleStateChange("lastName", e)}
+          value={state["lastName"]}
+          placeholder="Last Name"
+        />
+        <FormInput
+          label="Email"
+          onChangeText={(e) => handleStateChange("email", e)}
+          value={state["email"]}
+          placeholder="Email"
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
         <Text style={styles.labels}>Image Upload</Text>
         <ImageUpload
           imageUri={state["imageUri"]}
@@ -130,13 +119,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "bold",
     marginVertical: 10,
-  },
-  inputContainer: {
-    borderColor: "lightgray",
-    borderWidth: 1,
-    borderRadius: 10,
-    padding: 10,
-    backgroundColor: "white",
   },
   descriptionInput: {
     backgroundColor: "#fff",

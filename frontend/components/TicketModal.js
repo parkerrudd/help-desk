@@ -68,7 +68,6 @@ export default function TicketModal({
         </Text>
         {modalInfo?.imageBase64 && (
           <>
-            <Text style={{ fontWeight: "bold" }}>Photo:</Text>
             <Image
               style={{ width: 150, height: 150 }}
               source={{
@@ -119,7 +118,7 @@ const styles = StyleSheet.create({
     borderColor: "lightgray",
     borderWidth: 1,
     borderRadius: 10,
-    paddingBottom: 100,
+    paddingBottom: 90,
     paddingLeft: 10,
     paddingTop: 10,
   },
