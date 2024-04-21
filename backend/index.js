@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
+require("dotenv").config();
 const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(cors());
@@ -8,9 +9,7 @@ app.use(express.json({ limit: "50mb" }));
 const Ticket = require("./models/ticketModel");
 
 mongoose
-  .connect(
-    "mongodb+srv://admin:trustme123@serverlessinstance0.kncs8go.mongodb.net/?retryWrites=true&w=majority"
-  )
+  .connect(process.env.MONGODB_URI)
   .then(() => {
     console.log("Connected to MongoDB");
     app.listen(PORT, () => {
