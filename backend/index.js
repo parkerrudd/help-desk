@@ -9,7 +9,7 @@ const Ticket = require("./models/ticketModel");
 
 mongoose
   .connect(
-    "mongodb+srv://admin:trustme123@helpdeskapi.dpxirzm.mongodb.net/?retryWrites=true&w=majority"
+    "mongodb+srv://admin:trustme123@serverlessinstance0.kncs8go.mongodb.net/?retryWrites=true&w=majority"
   )
   .then(() => {
     console.log("Connected to MongoDB");
