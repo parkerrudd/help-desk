@@ -9,7 +9,9 @@ app.use(express.json({ limit: "50mb" }));
 const Ticket = require("./models/ticketModel");
 
 mongoose
-  .connect(process.env.MONGODB_URI)
+  .connect(
+    "mongodb+srv://admin:trustme123@serverlessinstance0.kncs8go.mongodb.net/?retryWrites=true&w=majority"
+  )
   .then(() => {
     console.log("Connected to MongoDB");
     app.listen(PORT, () => {
